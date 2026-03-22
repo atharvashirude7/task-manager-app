@@ -71,3 +71,8 @@ try:
 
 except:
     st.error("Cannot connect to backend server")
+import subprocess
+import time
+
+subprocess.Popen(["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"])
+time.sleep(2)
