@@ -31,21 +31,23 @@ if st.button("Add Task"):
             "priority": priority
         }
 
-        try:
-            response = requests.post(
-                "http://127.0.0.1:8000/add-task",
-                json=data
-            )
-            st.write("Status Code:", response.status_code)
-            st.write("Response:", response.text)
+        
+try:
+    response = requests.post(
+        "https://task-manager-app-production-9c8f.up.railway.app/add-task",
+        json=data
+    )
 
-            if response.status_code == 200:
-                st.success("Task added successfully")
-            else:
-                st.error("Failed to add task")
+    st.write("Status Code:", response.status_code)
+    st.write("Response:", response.text)
 
-        except:
-            st.error("Backend server not running")
+    if response.status_code == 200:
+        st.success("Task added successfully")
+    else:
+        st.error("Failed to add task")
+
+except:
+    st.error("Backend server not running")
 
 
 st.write("---")
@@ -54,7 +56,9 @@ st.write("---")
 st.subheader("📋 All Tasks")
 
 try:
-    response = requests.get("http://127.0.0.1:8000/tasks")
+    response = requests.get(
+        "https://task-manager-app-production-9c8f.up.railway.app/tasks"
+    )
 
     if response.status_code == 200:
         tasks = response.json()
@@ -71,8 +75,3 @@ try:
 
 except:
     st.error("Cannot connect to backend server")
-import subprocess
-import time
-
-subprocess.Popen(["uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8000"])
-time.sleep(2)
